@@ -120,6 +120,7 @@ lowest_transition_eV = []
 lowest_transition_wavenumber = []
 # goes through all of the TD-DFT output files in directory and parse through them
 for filename in glob.iglob('../output_files/TDDFT/TDDFT_acceptors/*.out'): 
+    print(filename)
     parse_TDDFT(filename, 'acc')
 # goes through all of the files in the donor directory and parse through them
 for filename in glob.iglob('../output_files/TDDFT/TDDFT_donors/*.out'): 
@@ -323,9 +324,9 @@ def parse_output_MOenergies(filename):
     lumo_energy = values.moenergies[0][lumo]
     homo_minus1_energy = values.moenergies[0][homo_minus1]
     lumo_plus1_energy = values.moenergies[0][lumo_plus1]
-    moment = values.moments
+    #moment = values.moments
     
-    homo_lumo = [homo_energy, lumo_energy, moment, homo_minus1_energy, lumo_plus1_energy]
+    homo_lumo = [homo_energy, lumo_energy, homo_minus1_energy, lumo_plus1_energy]
     
     return homo_lumo
 
@@ -360,8 +361,8 @@ def make_DFT_descriptors(filename, acc_or_don):
     if acc_or_don == 'acc':
         acceptor_names.append(filename)
         a_homo.append(output[0])
-        a_deltaHOMO.append(output[0] - output[3])
-        a_deltaLUMO.append(output[4] - output[1])
+        a_deltaHOMO.append(output[0] - output[2])
+        a_deltaLUMO.append(output[3] - output[1])
 
         for x in range(len(molecules_names)):
             if molecules_names[x] == filename:
@@ -377,8 +378,8 @@ def make_DFT_descriptors(filename, acc_or_don):
     else:
         donor_names.append(filename)
         d_homo.append(output[0])
-        d_deltaHOMO.append(output[0] - output[3])
-        d_deltaLUMO.append(output[4] - output[1])
+        d_deltaHOMO.append(output[0] - output[2])
+        d_deltaLUMO.append(output[3] - output[1])
 
         for x in range(len(molecules_names)):
             if molecules_names[x] == filename:
@@ -525,7 +526,8 @@ with open('../data_csv/pi_system_size.csv', "w") as csvoutput:
 
 # parses through GFN2-xTB output files to find Polarizability
 alpha = '\u03B1'
-polar_searchline = 'Mol. ' + alpha + '(0) /au'
+#polar_searchline = 'Mol. ' + alpha + '(0) /au'
+polar_searchline = 'Mol. C8AA'
 gfn2_output = {}
 for filename in glob.iglob('../output_files/GFN2/*.out'):
     outputs = []
@@ -533,7 +535,9 @@ for filename in glob.iglob('../output_files/GFN2/*.out'):
         pol_Line = pol_File.readline()
         while pol_Line:
             if polar_searchline in pol_Line:
+                pol_Line = pol_File.readline()
                 pol_au = float(pol_Line[-13:-1])
+                print(pol_au)
                 outputs.append(pol_au)
 
             elif '(HOMO)' in pol_Line:
@@ -562,8 +566,9 @@ for filename in glob.iglob('../output_files/GFN2/*.out'):
 
             pol_Line = pol_File.readline()
     
-    filename = filename.split('.',1)[0] #Splitting file name to get molecule name
     filename = filename.split('/')[-1]
+    filename = filename.split('.',1)[0] #Splitting file name to get molecule name
+    
     gfn2_output[filename] = outputs
             
               
@@ -655,7 +660,7 @@ def AbsFOM(filename, wavenumber, oscs):
    
     wavelength15AM = [] #wavelength for 1.5 AM spectra
     normalized_irr_15AM = []
-    with open('/ihome/ghutchison/blp62/xyz/tddft/figure_of_merit/Solar_radiation_spectrum.csv', "r") as csv_file: #contains normalized values
+    with open('../solar_spectrum/Solar_radiation_spectrum.csv', "r") as csv_file: #contains normalized values
         csv_reader = csv.DictReader(csv_file, delimiter = ',')
         for row in csv_reader:
             wavelength15AM.append(row['wavelength'])
@@ -1260,7 +1265,7 @@ for_analysis.to_csv('../data_csv/DFT_for_analysis.csv')
 for_analysis_highPCE = for_analysis[for_analysis.ExperimentalPCE >= 9.0]
 for_analysis_highPCE.to_csv('../data_csv/DFT_for_analysis_highPCE.csv')
 
-
+'''
 fields_sTDDFT = ['Acceptor', 'Donor', 'sTDDFTLUMO', 'sTDDFTHOMO', 'sTDDFTdeltaLUMO', 'sTDDFTdeltaHOMO', 'sTDDFToptbg', 
           'sTDDFToscs', 'sTDDFTfundbg', 'sTDDFTsinglepointenergy', 'sTDDFTdipolemoment', 'sTDDFTsummedoscs', 'sTDDFTabsFOM',
           'sTDDFTScharberVoc', 'sTDDFTScharberJscDon', 'sTDDFTScharberJscAcc', 'sTDDFTScharberJscTot', 'sTDDFTScharberPCETot',
@@ -1370,4 +1375,4 @@ for_analysis = data.drop(['Acceptor', 'Donor'], axis =1)
 for_analysis.to_csv('../data_csv/sTDDFT_for_analysis.csv')
 
 for_analysis_highPCE = for_analysis[for_analysis.ExperimentalPCE >= 9.0]
-for_analysis_highPCE.to_csv('../data_csv/sTDDFT_for_analysis_highPCE.csv')
+for_analysis_highPCE.to_csv('../data_csv/sTDDFT_for_analysis_highPCE.csv')'''

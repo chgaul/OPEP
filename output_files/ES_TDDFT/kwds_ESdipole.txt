@@ -1,0 +1,7 @@
+! Engrad Keepdens
+%maxcore 1000
+%tddft
+  nroots 3 
+  # nroots is the number of states to be computed
+  Iroot 1
+  end

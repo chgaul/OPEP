@@ -1,0 +1,13 @@
+! B3LYP def2-TZVP def2/J RIJCOSX Grid4 TightSCF
+
+%maxcore 6000
+%tddft
+  maxdim 5
+  nroots 3
+  dosoc true
+  end
+%pal
+  nprocs 6
+  end
+
+

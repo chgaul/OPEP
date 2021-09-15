@@ -46,21 +46,21 @@
    S. Dohm, S. Ehlert, S. Ehrlich, F. März, H. Neugebauer, J. Pisarek,
    P. Pracht, P. Shushkov, and S. Spicher.
    
- * started run on 2020/11/20 at 13:44:40.853     
+ * started run on 2021/04/12 at 13:52:51.438     
 
            -------------------------------------------------
           |                Calculation Setup                |
            -------------------------------------------------
 
           program call               : /ihome/ghutchison/geoffh/xtb/xtb AQx-2.xyz -sp
-          hostname                   : smp-n82
+          hostname                   : smp-n149
           coordinate file            : AQx-2.xyz
           omp threads                :                     1
           number of atoms            :                   100
           number of electrons        :                   348
           charge                     :                     0
           spin                       :                   0.0
-          first test random number   :      0.22962168907646
+          first test random number   :      0.02339702052472
 
 
 ########################################################################
@@ -173,14 +173,14 @@
                   HL-Gap            0.0261445 Eh            0.7114 eV
              Fermi-level           -0.3576766 Eh           -9.7329 eV
 
- SCC (total)                   0 d,  0 h,  0 min,  0.686 sec
- SCC setup                      ...        0 min,  0.003 sec (  0.368%)
- Dispersion                     ...        0 min,  0.006 sec (  0.874%)
- integral evaluation            ...        0 min,  0.207 sec ( 30.180%)
- zeroth order Hamiltonian       ...        0 min,  0.001 sec (  0.203%)
- iterations                     ...        0 min,  0.290 sec ( 42.194%)
- molecular gradient             ...        0 min,  0.177 sec ( 25.821%)
- printout                       ...        0 min,  0.002 sec (  0.350%)
+ SCC (total)                   0 d,  0 h,  0 min,  0.634 sec
+ SCC setup                      ...        0 min,  0.003 sec (  0.395%)
+ Dispersion                     ...        0 min,  0.005 sec (  0.866%)
+ integral evaluation            ...        0 min,  0.200 sec ( 31.524%)
+ zeroth order Hamiltonian       ...        0 min,  0.001 sec (  0.214%)
+ iterations                     ...        0 min,  0.261 sec ( 41.249%)
+ molecular gradient             ...        0 min,  0.161 sec ( 25.402%)
+ printout                       ...        0 min,  0.002 sec (  0.341%)
 
          :::::::::::::::::::::::::::::::::::::::::::::::::::::
          ::                     SUMMARY                     ::
@@ -467,14 +467,14 @@ molecular quadrupole (traceless):
            -------------------------------------------------
 
 ------------------------------------------------------------------------
- * finished run on 2020/11/20 at 13:44:41.762     
+ * finished run on 2021/04/12 at 13:52:52.315     
 ------------------------------------------------------------------------
  total:
- * wall-time:     0 d,  0 h,  0 min,  0.909 sec
- *  cpu-time:     0 d,  0 h,  0 min,  0.908 sec
- * ratio c/w:     0.999 speedup
+ * wall-time:     0 d,  0 h,  0 min,  0.878 sec
+ *  cpu-time:     0 d,  0 h,  0 min,  0.849 sec
+ * ratio c/w:     0.968 speedup
  SCF:
- * wall-time:     0 d,  0 h,  0 min,  0.687 sec
- *  cpu-time:     0 d,  0 h,  0 min,  0.687 sec
- * ratio c/w:     1.000 speedup
+ * wall-time:     0 d,  0 h,  0 min,  0.635 sec
+ *  cpu-time:     0 d,  0 h,  0 min,  0.633 sec
+ * ratio c/w:     0.998 speedup
 
