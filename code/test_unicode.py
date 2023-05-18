@@ -6,7 +6,7 @@ alpha = '\u03B1'
 #polar_searchline = 'Mol. ' + alpha + '(0) /au'
 polar_searchline = 'Mol. C8AA'
 gfn2_output = {}
-for filename in glob.iglob('../output_files/GFN2/*.out'):
+for filename in sorted(glob.iglob('../output_files/GFN2/*.out')):
     outputs = []
     with open(filename, 'r', encoding = 'utf-8') as pol_File:
         pol_Line = pol_File.readline()

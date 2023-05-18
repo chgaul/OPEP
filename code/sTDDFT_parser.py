@@ -41,7 +41,7 @@ def cdxml_to_smiles(fname: str) -> str:
 pi_name = []
 smiles = []
 pi_size = []
-for filename in glob.iglob('../output_files/Pi_sys_size/*.cdxml'):
+for filename in sorted(glob.glob('../output_files/Pi_sys_size/*.cdxml')):
     smiles_str = cdxml_to_smiles(filename)
     if '\\' in smiles_str:
         smiles_str = str(smiles_str.replace('\\\\', '\\'))
@@ -246,9 +246,9 @@ def parse_sTDDFT(filename, donor_or_acc):
 
 acceptors_sTD = {}
 donors_sTD = {}
-for filename in glob.iglob('../output_files/sTDDFT/sTDDFT_acceptors/*.out'):
+for filename in sorted(glob.glob('../output_files/sTDDFT/sTDDFT_acceptors/*.out')):
     parse_sTDDFT(filename, 'acc')
-for filename in glob.iglob('../output_files/sTDDFT/sTDDFT_donors/*.out'):
+for filename in sorted(glob.iglob('../output_files/sTDDFT/sTDDFT_donors/*.out')):
     parse_sTDDFT(filename, 'donor')
     
 df_acc = pd.DataFrame.from_dict(acceptors_sTD, orient = 'index', columns = ['HOMO-1 (eV)', 'HOMO (eV)', 'LUMO (eV)', 'LUMO+1 (eV)', 'Delta HOMO', 'delta LUMO','optical bandgap (cm-1)', 'oscillator strength', 'single point energy', 'dipole moment (debye)', 'summed oscs', 'Abs FOM','first oscs', 'highest oscs under ten', 'first Energy Transition eV', 'first Energy transition wavenumber', 'lowest Energy Transition eV', 'lowest Energy transition wavenumber'])

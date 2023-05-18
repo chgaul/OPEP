@@ -119,11 +119,11 @@ highest_underten_oscs = []
 lowest_transition_eV = []
 lowest_transition_wavenumber = []
 # goes through all of the TD-DFT output files in directory and parse through them
-for filename in glob.iglob('../output_files/TDDFT/TDDFT_acceptors/*.out'): 
+for filename in sorted(glob.glob('../output_files/TDDFT/TDDFT_acceptors/*.out')):
     print(filename)
     parse_TDDFT(filename, 'acc')
 # goes through all of the files in the donor directory and parse through them
-for filename in glob.iglob('../output_files/TDDFT/TDDFT_donors/*.out'): 
+for filename in sorted(glob.glob('../output_files/TDDFT/TDDFT_donors/*.out')):
     parse_TDDFT(filename, 'don')
 
 #Create a csv file containing all of these lists
@@ -208,7 +208,7 @@ with open('../solar_spectrum/Solar_radiation_spectrum.csv', "r") as csv_file: #c
         normalized_irr_15AM.append(row['Normalized 1.5AM'])
         zipped_15AM = list(zip(wavelength15AM, normalized_irr_15AM)) #1.5 AM spectrum
         
-for filename in glob.iglob('../output_files/TDDFT/TDDFT_acceptors/*.out'): #going through all of the acceptors
+for filename in sorted(glob.glob('../output_files/TDDFT/TDDFT_acceptors/*.out')): #going through all of the acceptors
     with open(filename, 'r', encoding = 'utf-8') as file:
         line = file.readline()
         oscs = []
@@ -237,7 +237,7 @@ for filename in glob.iglob('../output_files/TDDFT/TDDFT_acceptors/*.out'): #goin
  
     (spectraEV, spectraNM, spectraIntensity) = spectra(wavenumber, oscs)
     
-    for d_filename in glob.iglob('../output_files/TDDFT/TDDFT_donors/*.out'): #going through all of the donors
+    for d_filename in sorted(glob.glob('../output_files/TDDFT/TDDFT_donors/*.out')): #going through all of the donors
         with open(d_filename, 'r', encoding = 'utf-8') as file:
             line = file.readline()
             oscs = []
@@ -402,10 +402,10 @@ d_calc_lumo = []
 d_bandgap = []
 d_deltaHOMO = []
 d_deltaLUMO = []
-for filename in glob.iglob('../output_files/DFT/DFT_acceptors/*.out'):
+for filename in sorted(glob.glob('../output_files/DFT/DFT_acceptors/*.out')):
     make_DFT_descriptors(filename, 'acc')
   
-for filename in glob.iglob('../output_files/DFT/DFT_donors/*.out'):
+for filename in sorted(glob.glob('../output_files/DFT/DFT_donors/*.out')):
     make_DFT_descriptors(filename, 'don')
         
 fields = ['Acceptor','Acc HOMO (eV)', 'Acc calc LUMO (eV)', 'Acc fund bandgap (eV)', 'Acc Ehomo - Ehomo-1', 'Acc Elumo+1 - Elumo', 'ElectroIndex']
@@ -501,7 +501,7 @@ def cdxml_to_smiles(fname: str) -> str:
 pi_name = []
 smiles = []
 pi_size = []
-for filename in glob.iglob('../output_files/Pi_sys_size/*.cdxml'):
+for filename in sorted(glob.glob('../output_files/Pi_sys_size/*.cdxml')):
     smiles_str = cdxml_to_smiles(filename)
     if '\\' in smiles_str:
         smiles_str = str(smiles_str.replace('\\\\', '\\'))
@@ -529,7 +529,7 @@ alpha = '\u03B1'
 #polar_searchline = 'Mol. ' + alpha + '(0) /au'
 polar_searchline = 'Mol. C8AA'
 gfn2_output = {}
-for filename in glob.iglob('../output_files/GFN2/*.out'):
+for filename in sorted(glob.glob('../output_files/GFN2/*.out')):
     outputs = []
     with open(filename, 'r', encoding = 'utf-8') as pol_File:
         pol_Line = pol_File.readline()
@@ -591,7 +591,7 @@ with open('../data_csv/GFN2_output.csv', "w") as csvoutput:
 
 # Parses through excited state TD-DFT calculation output files to calculate the chnage in dipole moment from ground to first excited state singlets
 Dipole_Moments = {}
-for filename in glob.iglob('../output_files/ES_TDDFT/*.out'):
+for filename in sorted(glob.glob('../output_files/ES_TDDFT/*.out')):
     dipole_mom = []
     with open(filename, 'r', encoding = 'utf-8') as ES_File:
         ES_Line = ES_File.readline()
@@ -630,7 +630,7 @@ df_dipmom.to_csv('../data_csv/ES_dipole.csv')
 
 # Parses the TD-DFT files containing triplet transitions for the energy of transtion from ground singlet state to first excited triplet state
 triplet_energy = {}
-for filename in glob.iglob('../output_files/triplet_TDDFT/*.out'):
+for filename in sorted(glob.glob('../output_files/triplet_TDDFT/*.out')):
     triplet = []
     with open(filename, 'r', encoding = 'utf-8') as trip_File:
         trip_Line = trip_File.readline()
@@ -790,9 +790,9 @@ def parse_sTDDFT(filename, donor_or_acc):
 
 acceptors_sTD = {}
 donors_sTD = {}
-for filename in glob.iglob('../output_files/sTDDFT/sTDDFT_acceptors/*.out'):
+for filename in sorted(glob.glob('../output_files/sTDDFT/sTDDFT_acceptors/*.out')):
     parse_sTDDFT(filename, 'acc')
-for filename in glob.iglob('../output_files/sTDDFT/sTDDFT_donors/*.out'):
+for filename in sorted(glob.glob('../output_files/sTDDFT/sTDDFT_donors/*.out')):
     parse_sTDDFT(filename, 'donor')
     
 df_acc = pd.DataFrame.from_dict(acceptors_sTD, orient = 'index', columns = ['HOMO-1 (eV)', 'HOMO (eV)', 'LUMO (eV)', 'LUMO+1 (eV)', 'Delta HOMO', 'delta LUMO','optical bandgap (cm-1)', 'oscillator strength', 'single point energy', 'dipole moment (debye)', 'summed oscs', 'Abs FOM','first oscs', 'highest oscs under ten', 'first Energy Transition eV', 'first Energy transition wavenumber', 'lowest Energy Transition eV', 'lowest Energy transition wavenumber'])
