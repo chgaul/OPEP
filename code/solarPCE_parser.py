@@ -1097,21 +1097,22 @@ with open('../data_csv/data_on_OPVpairs.csv', "w") as csvoutput:
                             mydict['HOMOOffset'] = homo_offset[p]
                             mydict['DHomoALumoOffset'] = donHOMO_accLUMO_offset[p]
                             mydict['ScharberVoc'] = float(mydict['DHomoALumoOffset']) - 0.3
-                            # Depends only on x (index of donor)
-                            mydict['DonElectroIndex'] = electrophilicity_index(don_homo[x], don_calc_lumo[x])
-                            mydict['DonNucleoIndex'] = 1 / float(mydict['DonElectroIndex'])
-                            mydict['DonChemHard']  = (-1 * float(don_homo[x])) - (-1 * float(don_calc_lumo[x]))
-                            mydict['DonElectrodonating']= ((3*(-1 * float(don_homo[x]))) + (-1 * float(don_calc_lumo[x])))**2 / (16 * ((-1 * float(don_homo[x])) - (-1 * float(don_calc_lumo[x]))))
-                            mydict['DonElectroaccepting'] = ((-1 * float(don_homo[x])) + (3*(-1 * float(don_calc_lumo[x]))))**2 / (16 * ((-1 * float(don_homo[x])) - (-1 * float(don_calc_lumo[x]))))
-                            # Depends only on i (index of acceptor)
-                            mydict['AccChemHard'] = (-1 * float(acc_homo[i])) - (-1 * float(acc_calc_lumo[i]))
-                            mydict['AccElectrodonating'] = ((3*(-1 * float(acc_homo[i]))) + (-1 * float(acc_calc_lumo[i])))**2 / (16 * ((-1 * float(acc_homo[i])) - (-1 * float(acc_calc_lumo[i]))))
-                            mydict['AccElectroaccepting'] = ((-1 * float(acc_homo[i])) + (3*(-1 * float(acc_calc_lumo[i]))))**2 / (16 * ((-1 * float(acc_homo[i])) - (-1 * float(acc_calc_lumo[i]))))
                             break
                         else:
                             mydict['ScharberVoc'] = ""
                             mydict['LUMOOffset'] = ""
                             mydict['DHomoALumoOffset'] = ""
+
+                # Depends only on x (index of donor)
+                mydict['DonElectroIndex'] = electrophilicity_index(don_homo[x], don_calc_lumo[x])
+                mydict['DonNucleoIndex'] = 1 / float(mydict['DonElectroIndex'])
+                mydict['DonChemHard']  = (-1 * float(don_homo[x])) - (-1 * float(don_calc_lumo[x]))
+                mydict['DonElectrodonating']= ((3*(-1 * float(don_homo[x]))) + (-1 * float(don_calc_lumo[x])))**2 / (16 * ((-1 * float(don_homo[x])) - (-1 * float(don_calc_lumo[x]))))
+                mydict['DonElectroaccepting'] = ((-1 * float(don_homo[x])) + (3*(-1 * float(don_calc_lumo[x]))))**2 / (16 * ((-1 * float(don_homo[x])) - (-1 * float(don_calc_lumo[x]))))
+                # Depends only on i (index of acceptor)
+                mydict['AccChemHard'] = (-1 * float(acc_homo[i])) - (-1 * float(acc_calc_lumo[i]))
+                mydict['AccElectrodonating'] = ((3*(-1 * float(acc_homo[i]))) + (-1 * float(acc_calc_lumo[i])))**2 / (16 * ((-1 * float(acc_homo[i])) - (-1 * float(acc_calc_lumo[i]))))
+                mydict['AccElectroaccepting'] = ((-1 * float(acc_homo[i])) + (3*(-1 * float(acc_calc_lumo[i]))))**2 / (16 * ((-1 * float(acc_homo[i])) - (-1 * float(acc_calc_lumo[i]))))
                                 
                 for don in range(len(TDDFT_molecule)):
                     if TDDFT_molecule[don] == donors[x]:
