@@ -1090,18 +1090,17 @@ with open('../data_csv/data_on_OPVpairs.csv', "w") as csvoutput:
                         mydict['ScharberJscDon'] = ""
                         
                 for p in range(len(offset_pair)):
-                    if str(acceptors[i]) in str(offset_pair[p]):
-                        if str(donors[x]) in str(offset_pair[p]):
-                            # Depends on p (index of offset_pair):
-                            mydict['LUMOOffset'] = lumo_offset[p]
-                            mydict['HOMOOffset'] = homo_offset[p]
-                            mydict['DHomoALumoOffset'] = donHOMO_accLUMO_offset[p]
-                            mydict['ScharberVoc'] = float(mydict['DHomoALumoOffset']) - 0.3
-                            break
-                        else:
-                            mydict['ScharberVoc'] = ""
-                            mydict['LUMOOffset'] = ""
-                            mydict['DHomoALumoOffset'] = ""
+                    if offset_pair[p] == f"{acceptors[i]}/{donors[x]}":
+                        # Depends on p (index of offset_pair):
+                        mydict['LUMOOffset'] = lumo_offset[p]
+                        mydict['HOMOOffset'] = homo_offset[p]
+                        mydict['DHomoALumoOffset'] = donHOMO_accLUMO_offset[p]
+                        mydict['ScharberVoc'] = float(mydict['DHomoALumoOffset']) - 0.3
+                        break
+                else: # loop was not broken
+                    mydict['ScharberVoc'] = ""
+                    mydict['LUMOOffset'] = ""
+                    mydict['DHomoALumoOffset'] = ""
 
                 # Depends only on x (index of donor)
                 mydict['DonElectroIndex'] = electrophilicity_index(don_homo[x], don_calc_lumo[x])
