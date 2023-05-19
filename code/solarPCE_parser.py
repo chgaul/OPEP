@@ -1127,10 +1127,11 @@ with open('../data_csv/data_on_OPVpairs.csv', "w") as csvoutput:
                         mydict['ImamuraVoc'] = ""
                         
                 for pair in range(len(TDDFT_pairs)):
-                    if str(acceptors[i]) in str(TDDFT_pairs[pair]):
-                        if str(donors[x]) in str(TDDFT_pairs[pair]):
-                            mydict['AbsFOM'] = abs_FOM[pair]
-                            break
+                    don_str, acc_str = TDDFT_pairs[pair].split(' and ')
+                    don_str = don_str.split('_')[0]
+                    if acc_str == acceptors[i] and don_str == donors[x]:
+                        mydict['AbsFOM'] = abs_FOM[pair]
+                        break
 
                 for es in range(len(ES_molecule)):
                     if ES_molecule[es] == acceptors[i]:
